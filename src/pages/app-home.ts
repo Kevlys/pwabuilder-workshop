@@ -12,16 +12,25 @@ export class AppHome extends LitElement {
 
   // For more information on using properties and state in lit
   // check out this link https://lit.dev/docs/components/properties/
-  @property() message = 'Welcome!';
+  @property() message = 'Welcome on web app template';
 
   static styles = [
     styles,
     css`
+
+    app-notification {
+      position: absolute;
+      z-index: 99;
+      top: 0;
+      right: 0;
+    }
+
     #welcomeBar {
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      text-align: center;
     }
 
     #welcomeCard,
@@ -73,6 +82,7 @@ export class AppHome extends LitElement {
 
   render() {
     return html`
+      <app-notification></app-notification>
       <app-header></app-header>
 
       <main>
@@ -82,47 +92,10 @@ export class AppHome extends LitElement {
               <h2>${this.message}</h2>
             </div>
 
-            <p>
-              For more information on the PWABuilder pwa-starter, check out the
-              <a href="https://docs.pwabuilder.com/#/starter/quick-start">
-                documentation</a>.
-            </p>
-
             <p id="mainInfo">
-              Welcome to the
-              <a href="https://pwabuilder.com">PWABuilder</a>
-              pwa-starter! Be sure to head back to
-              <a href="https://pwabuilder.com">PWABuilder</a>
-              when you are ready to ship this PWA to the Microsoft Store, Google Play
-              and the Apple App Store!
+              Bienvenue sur le template web app de la Digital Factory Pierre Frey !
             </p>
 
-            ${'share' in navigator
-              ? html`<sl-button slot="footer" variant="primary" @click="${this.share}">Share this Starter!</sl-button>`
-              : null}
-          </sl-card>
-
-          <sl-card id="infoCard">
-            <h2>Technology Used</h2>
-
-            <ul>
-              <li>
-                <a href="https://www.typescriptlang.org/">TypeScript</a>
-              </li>
-
-              <li>
-                <a href="https://lit.dev">lit</a>
-              </li>
-
-              <li>
-                <a href="https://shoelace.style/">Shoelace</a>
-              </li>
-
-              <li>
-                <a href="https://github.com/thepassle/app-tools/blob/master/router/README.md"
-                  >App Tools Router</a>
-              </li>
-            </ul>
           </sl-card>
 
           <sl-button href="${resolveRouterPath('about')}" variant="primary">Navigate to About</sl-button>

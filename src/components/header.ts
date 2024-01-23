@@ -5,8 +5,6 @@ import { resolveRouterPath } from '../router';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
 @customElement('app-header')
 export class AppHeader extends LitElement {
-  @property({ type: String }) title = 'PWA Starter';
-
   @property({ type: Boolean}) enableBack: boolean = false;
 
   static styles = css`
@@ -28,11 +26,11 @@ export class AppHeader extends LitElement {
       -webkit-app-region: drag;
     }
 
-    header h1 {
-      margin-top: 0;
-      margin-bottom: 0;
-      font-size: 20px;
-      font-weight: bold;
+    #logo img {
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
     }
 
     nav a {
@@ -46,14 +44,12 @@ export class AppHeader extends LitElement {
       width: 12em;
     }
 
-    @media(prefers-color-scheme: light) {
-      header {
+    header {
         color: black;
-      }
+    }
 
-      nav a {
-        color: initial;
-      }
+    nav a {
+      color: initial;
     }
   `;
 
@@ -65,8 +61,9 @@ export class AppHeader extends LitElement {
           ${this.enableBack ? html`<sl-button href="${resolveRouterPath()}">
             Back
           </sl-button>` : null}
-
-          <h1>${this.title}</h1>
+        </div>
+        <div id="logo">
+          <img src="https://www.pierrefrey.com/images/logo-pierre-frey.svg"  width="100" height="100">
         </div>
       </header>
     `;

@@ -2,6 +2,7 @@ import { LitElement, css } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
 import './pages/app-home';
+import './components/notification';
 import './components/header';
 import './styles/global.css';
 import { router } from './router';

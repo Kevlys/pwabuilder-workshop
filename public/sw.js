@@ -5,6 +5,43 @@ importScripts(
 // This is your Service Worker, you can put any of your custom Service Worker
 // code in this file, above the `precacheAndRoute` line.
 
+self.addEventListener('push', function(event) {
+    const data = JSON.parse(event.data.text());
+    console.log("push notification heard.");
+    console.log("data", data);
+  
+    event.waitUntil(
+      registration.showNotification(data.title, {
+        body: data.message,
+        icon: 'assets/media/toast.jpg'
+      })
+    );
+  });
+  
+  self.addEventListener('notificationclick', function(event) {
+    event.notification.close();
+  
+    event.waitUntil(
+      clients.matchAll({ type: 'window', includeUncontrolled: true })
+        .then(function(clientList) {
+          if (clientList.length > 0) {
+            let client = clientList[0];
+  
+            for (let i = 0; i < clientList.length; i++) {
+              if (clientList[i].focused) {
+                client = clientList[i];
+              }
+            }
+  
+            return client.focus();
+          }
+  
+          return clients.openWindow('/');
+        })
+    );
+  });
+
+
 // When widget is installed/pinned, push initial state.
 self.addEventListener('widgetinstall', (event) => {
     event.waitUntil(updateWidget(event));
