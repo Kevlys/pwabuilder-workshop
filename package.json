@@ -7,7 +7,7 @@
     "dev-server": "vite --open",
     "dev": "npm run dev-server",
     "dev-task": "vite",
-    "deploy": "npx @azure/static-web-apps-cli login --no-use-keychain && npx @azure/static-web-apps-cli deploy",
+    "deploy": "npx @azure/static-web-apps-cli login --subscription-id=43cb79e3-bb12-4859-8c28-4284d3d46e7b --no-use-keychain && npx @azure/static-web-apps-cli deploy",
     "build": "tsc && vite build",
     "start": "npm run dev",
     "start-remote": "vite --host"
@@ -18,6 +18,7 @@
     "@shoelace-style/shoelace": "^2.4.0",
     "@thepassle/app-tools": "^0.9.9",
     "lit": "^2.7.2",
+    "rxjs": "^7.8.1",
     "urlpattern-polyfill": "^7.0.0",
     "workbox-build": "^6.5.2",
     "workbox-core": "^6.5.2",

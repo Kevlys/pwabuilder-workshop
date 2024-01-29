@@ -8,6 +8,7 @@ export const styles = css`
   }
 
   main {
-    margin-top: 180px;
+    margin-top: 380px;
+    text-align: center; /* Ajoutez cette ligne pour centrer horizontalement */
   }
 `;

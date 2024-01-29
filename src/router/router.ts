@@ -7,29 +7,47 @@ if (!(globalThis as any).URLPattern) {
 }
 
 import { Router } from '@thepassle/app-tools/router.js';
+import isAuthenticatedPlugin from './plugins/isAuthenticatedPlugin';
+import isNotAuthenticatedPlugin from './plugins/isNotAuthenticatedPlugin';
+
 import { lazy } from '@thepassle/app-tools/router/plugins/lazy.js';
 
 // @ts-ignore
 import { title } from '@thepassle/app-tools/router/plugins/title.js';
 
-import './pages/app-home.js';
+import '../pages/app-home.js';
+
 
 const baseURL: string = (import.meta as any).env.BASE_URL;
 
+
 export const router = new Router({
+    plugins: [],
+    fallback: '/',
     routes: [
       {
         path: resolveRouterPath(),
         title: 'Home',
+        plugins: [isAuthenticatedPlugin],
         render: () => html`<app-home></app-home>`
       },
       {
-        path: resolveRouterPath('about'),
-        title: 'About',
+        path: resolveRouterPath('account'),
+        title: 'Account',
         plugins: [
-          lazy(() => import('./pages/app-about/app-about.js')),
+          lazy(() => import('../pages/account/account.js')),
+          isAuthenticatedPlugin
         ],
-        render: () => html`<app-about></app-about>`
+        render: () => html`<app-account></app-account>`
+      },
+      {
+        path: resolveRouterPath('login'),
+        title: 'Login',
+        plugins: [
+          lazy(() => import('../pages/login/app-login.js')),
+          isNotAuthenticatedPlugin,
+        ],
+        render: () => html`<app-login></app-login>`
       }
     ]
   });

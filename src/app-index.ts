@@ -3,9 +3,13 @@ import { customElement } from 'lit/decorators.js';
 
 import './pages/app-home';
 import './components/notification';
+import './components/user-info';
+import './components/auth/google-auth';
 import './components/header';
 import './styles/global.css';
-import { router } from './router';
+import { router } from './router/router';
+import { userStore } from './userState';
+
 
 @customElement('app-index')
 export class AppIndex extends LitElement {

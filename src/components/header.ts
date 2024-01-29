@@ -1,6 +1,7 @@
 import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import { resolveRouterPath } from '../router';
+import { resolveRouterPath } from '../router/router';
+import { userStore } from '../userState';
 
 import '@shoelace-style/shoelace/dist/components/button/button.js';
 @customElement('app-header')
@@ -61,6 +62,7 @@ export class AppHeader extends LitElement {
           ${this.enableBack ? html`<sl-button href="${resolveRouterPath()}">
             Back
           </sl-button>` : null}
+          <sl-button @click="${userStore.logout}" variant="primary">LOG OUT</sl-button>
         </div>
         <div id="logo">
           <img src="https://www.pierrefrey.com/images/logo-pierre-frey.svg"  width="100" height="100">

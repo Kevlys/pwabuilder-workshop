@@ -1,18 +1,22 @@
 import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import { resolveRouterPath } from '../router';
+import { resolveRouterPath } from '../router/router';
 
 import '@shoelace-style/shoelace/dist/components/card/card.js';
 import '@shoelace-style/shoelace/dist/components/button/button.js';
 
 import { styles } from '../styles/shared-styles';
+import { fetchData } from '../httpService';
+import { userStore, UserState } from '../userState';
+
 
 @customElement('app-home')
 export class AppHome extends LitElement {
 
   // For more information on using properties and state in lit
   // check out this link https://lit.dev/docs/components/properties/
-  @property() message = 'Welcome on web app template';
+  @property({ type: Object }) user: UserState | null = null;
+  @property({ type: Object }) responseData: any | null = null; // Ajoutez cette propriété
 
   static styles = [
     styles,
@@ -68,6 +72,11 @@ export class AppHome extends LitElement {
     // this method is a lifecycle even in lit
     // for more info check out the lit docs https://lit.dev/docs/components/lifecycle/
     console.log('This is your home page');
+
+    // Charger le user via await et stocker le résultat dans la variable de classe
+    this.user = await userStore.getUser();
+    // Appeler render() pour déclencher le rendu avec les nouvelles données
+    this.requestUpdate();
   }
 
   share() {
@@ -80,25 +89,52 @@ export class AppHome extends LitElement {
     }
   }
 
+  async callGetApi(){
+
+    // Exemple de requête GET vers une API
+    try {
+      const data = await fetchData('https://127.0.0.1:8000/json', {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      console.log('Données récupérées avec succès:', data);
+
+      this.responseData = data; // Stockez la réponse dans la propriété responseData
+
+
+    } catch (error) {
+      console.error('Erreur lors de la requête:', error);
+    }
+  }
+
   render() {
+
     return html`
       <app-notification></app-notification>
       <app-header></app-header>
-
       <main>
         <div id="welcomeBar">
           <sl-card id="welcomeCard">
-            <div slot="header">
-              <h2>${this.message}</h2>
-            </div>
-
+          <div slot="header">
+          ${this.user
+            ? html`
+                <p>Bonjour ${this.user.firstname} ${this.user.lastname} !</p>
+                <p>Bienvenue sur le template web app de la Digital Factory Pierre Frey !</p>
+              `
+            : html`<p>Loading...</p>`}
+        </div>
             <p id="mainInfo">
-              Bienvenue sur le template web app de la Digital Factory Pierre Frey !
+
+              <sl-button @click="${this.callGetApi}" variant="primary">CALL JSON CONTROLLER</sl-button>
+              ${this.responseData
+                ? html`
+                    <p>Réponse de l'API : ${JSON.stringify(this.responseData)}</p>
+                  `
+                : ''}
             </p>
-
           </sl-card>
-
-          <sl-button href="${resolveRouterPath('about')}" variant="primary">Navigate to About</sl-button>
+          <sl-button href="${resolveRouterPath('account')}" variant="primary">Navigate to My account</sl-button>
         </div>
       </main>
     `;

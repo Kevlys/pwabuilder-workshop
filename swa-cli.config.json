@@ -1,12 +1,14 @@
 {
   "$schema": "https://aka.ms/azure/static-web-apps-cli/schema",
   "configurations": {
-    "pwa-starter": {
+    "pwabuilder-workshop": {
+      "appName": "pwabuilder-workshop",
       "appLocation": ".",
       "outputLocation": "dist",
       "appBuildCommand": "npm run build --if-present",
       "run": "npm start",
-      "appDevserverUrl": "http://localhost:3000"
+      "appDevserverUrl": "http://localhost:3000",
+      "resourceGroup": "pwabuilder-workshop_group"
     }
   }
 }
